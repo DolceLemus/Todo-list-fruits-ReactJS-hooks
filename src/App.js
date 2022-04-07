@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [fruits, setFruits] = useState([]);
+  const [fruit, setFruit] = useState();
+
+  const handleChange = (e) => {
+    const item = e.target.value;
+    setFruit(item);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFruits([...fruits, fruit]);
+    setFruit("");
+  };
+
+  console.log("fruitsList", fruits);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <input name="fruit" value={fruit} type="text" onChange={handleChange} />
+        <button type="submit">Add fruit</button>
+      </form>
+
+      <ul>
+        {fruits.map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
